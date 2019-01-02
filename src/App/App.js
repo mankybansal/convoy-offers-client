@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import logo from '../Resources/convoy-logo.png';
 import './App.css';
+import formatDate from 'dateformat'
 
 const ORDER = {
     ASC: 'desc',
@@ -22,6 +23,55 @@ function numberWithCommas(x) {
 function camelCase(x) {
     let result = x.replace(/([A-Z])/g, " $1");
     return (result.charAt(0).toUpperCase() + result.slice(1)); // capitalize the first letter - as an example.
+}
+
+
+class Offer extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+
+        let pickupStart = new Date(this.props.offer.origin.pickup.start);
+        let pickupEnd = new Date(this.props.offer.origin.pickup.end);
+        let dropoffStart = new Date(this.props.offer.destination.dropoff.start);
+        let dropoffEnd = new Date(this.props.offer.destination.dropoff.end);
+
+        let pickupLocation = this.props.offer.origin.city + ", " + this.props.offer.origin.state;
+        let dropoffLocation = this.props.offer.destination.city + ", " + this.props.offer.destination.state
+
+        return (
+            <div className="Offer-card" key={this.props.index}>
+
+                <div className="Offer-card-route">
+                    <div className="point-marker"/>
+                    {pickupLocation} &nbsp;&nbsp;&rarr;&nbsp;&nbsp;
+                    <div className="point-marker"/>
+                    {dropoffLocation}
+                </div>
+
+                <div className="Offer-card-offer">
+                    ${numberWithCommas(this.props.offer.offer)}
+                </div>
+
+                <br/>
+
+                <div className="Offer-card-dist">
+                    {this.props.offer.miles} miles
+                </div>
+
+                <br/><br/>
+
+                Pickup: {formatDate(pickupStart, "d mmm yyyy hh:MM tt")}&nbsp;–&nbsp;{formatDate(pickupEnd, "hh:MM tt Z")}
+
+                <br/><br/>
+
+                Dropoff: {formatDate(dropoffStart, "d mmm yyyy hh:MM tt")}&nbsp;–&nbsp;{formatDate(dropoffEnd, "hh:MM tt Z")}
+                <div className="Offer-card-view">View</div>
+            </div>
+        );
+    }
 }
 
 class OfferViewer extends React.Component {
@@ -168,7 +218,8 @@ class OfferViewer extends React.Component {
                         <button className="dark" onClick={() => this.sortHandler('dropoffDate')}>Dropoff
                             Date &nbsp;&nbsp;<i className="fa fa-sort"/></button>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sorted
-                        by <span className="Offers-sort-method">{camelCase(this.state.sortMethod)}, {camelCase(this.state.orderMethod)}</span>
+                        by <span
+                        className="Offers-sort-method">{camelCase(this.state.sortMethod)}, {camelCase(this.state.orderMethod)}</span>
                     </div>
 
                     <div className="Offers-pagenation">
@@ -193,22 +244,7 @@ class OfferViewer extends React.Component {
 
                     <div className="Offers-container">
                         {offers.map((offer, index) => (
-                            <div className="Offer-card" key={index}>
-
-                                <div className="Offer-card-route">
-                                    <div className="point-marker"/> {offer.origin.city}, {offer.origin.state} &nbsp;&nbsp;&rarr;&nbsp;&nbsp; <div className="point-marker"/> {offer.destination.city}, {offer.destination.state}
-                                </div>
-                                <div className="Offer-card-offer">${numberWithCommas(offer.offer)}</div>
-                                <br/>
-                                <div className="Offer-card-dist">{offer.miles} miles</div>
-                                <br/>
-                                <br/>
-                                Pickup: {new Date(offer.origin.pickup.start).toLocaleString()} &nbsp;&nbsp;&rarr;&nbsp;&nbsp; {new Date(offer.origin.pickup.end).toLocaleString()}
-                                <br/>
-                                <br/>
-                                Dropoff: {new Date(offer.destination.dropoff.start).toLocaleString()} &nbsp;&nbsp;&rarr;&nbsp;&nbsp; {new Date(offer.destination.dropoff.end).toLocaleString()}<br/>
-                                <div className="Offer-card-view">View</div>
-                            </div>
+                            <Offer index={index} offer={offer}/>
                         ))}
                     </div>
                 </div>
