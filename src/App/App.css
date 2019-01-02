@@ -88,7 +88,7 @@
   height: 100%;
   width: 100%;
   background: #FAFAFA;
-  padding: 120px 150px 110px 150px;
+  padding: 120px;
   box-sizing: border-box;
   text-align: center;
 }
@@ -97,6 +97,7 @@
   box-sizing: border-box;
   padding: 40px;
   width: 100%;
+  max-width: 800px;
   text-align: left;
   background: white;
   font-family: Roboto-Regular, sans-serif;
@@ -116,31 +117,25 @@
   width: 100%;
 }
 
-.point-marker {
-  height: 25px;
-  width: 25px;
-  margin: 10px 0;
-  border-radius: 50%;
-  border: 2px solid #333;
-}
-
-.point-marker::after {
-  position: absolute;
-
-  height: 15px;
-  width: 15px;
-  margin: 10px 0;
-  border-radius: 50%;
-  border: 2px solid #333;
-}
 
 .Offer-card-offer {
-  padding: 10px 0 20px 0;
-  color: #777;
-  font-size: 25px;
+  color: black;
+  font-size: 30px;
+  position: absolute;
+  right: 40px;
+  top: 45px;
   line-height: normal;
   font-family: Roboto-Regular, sans-serif;
   display: inline-block;
+  text-align: right;
+}
+
+.Offer-card-label {
+  text-transform: uppercase;
+  color: #777;
+  font-family: Roboto-Regular, sans-serif;
+  font-size: 16px;
+  margin-bottom: 7px;
 }
 
 .Offer-card-dist {
@@ -148,10 +143,13 @@
   border-radius: 13px;
   background: #EAF5F4;
   color: #72B2AA;
-  font-size: 14px;
+  font-size: 16px;
   line-height: normal;
   font-family: Roboto-Medium, sans-serif;
   display: inline-block;
+  position: absolute;
+  right: 40px;
+  top: 120px;
 }
 
 .Offer-card-view {
@@ -205,4 +203,88 @@ button.light.disabled {
 
 i.fa-sort {
   opacity: .5;
+}
+
+.Offer-card-location {
+  width: 100%;
+  display: inline-block;
+}
+
+.Offer-card-location.start {
+  margin-bottom: 40px;
+}
+
+.point-date {
+  display: inline-block;
+  width: 60px;
+  vertical-align: middle;
+  color: #777;
+}
+
+
+.point-marker {
+  vertical-align: middle;
+  height: 25px;
+  width: 25px;
+  margin: 10px 0;
+  border-radius: 50%;
+  border: 2px solid #D74314;
+  display: inline-block;
+  position: relative;
+  background: white;
+
+}
+
+.point-marker::before {
+  position: absolute;
+  content: " ";
+  margin: 7px;
+  height: 7px;
+  background: #D74314;
+  width: 7px;
+  border-radius: 50%;
+  border: 2px solid #D74314;
+}
+
+.point-marker.start::after {
+  position: absolute;
+  content: " ";
+  width: 2px;
+  left: 11px;
+  top: 28px;
+  height: 100px;
+  background: #DDD;
+  border-radius: 1px;
+}
+
+.location-info {
+  display: inline-block;
+  width: 300px;
+  vertical-align: top;
+  margin: 5px 0 0 25px;
+}
+
+.location-type {
+  text-transform: uppercase;
+  color: #777;
+  font-family: Roboto-Regular, sans-serif;
+  font-size: 16px;
+}
+
+.location-area {
+  color: black;
+  font-family: Roboto-Regular, sans-serif;
+  font-size: 30px;
+  margin-top: 7px;
+}
+
+.location-timings {
+  color: #333;
+  font-family: Roboto-Regular, sans-serif;
+  font-size: 16px;
+  margin-top: 7px;
+}
+
+i.fa-clock {
+  color: #AAA;
 }

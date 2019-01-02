@@ -39,19 +39,49 @@ class Offer extends React.Component {
         let dropoffEnd = new Date(this.props.offer.destination.dropoff.end);
 
         let pickupLocation = this.props.offer.origin.city + ", " + this.props.offer.origin.state;
-        let dropoffLocation = this.props.offer.destination.city + ", " + this.props.offer.destination.state
+        let dropoffLocation = this.props.offer.destination.city + ", " + this.props.offer.destination.state;
 
         return (
             <div className="Offer-card" key={this.props.index}>
 
-                <div className="Offer-card-route">
-                    <div className="point-marker"/>
-                    {pickupLocation} &nbsp;&nbsp;&rarr;&nbsp;&nbsp;
-                    <div className="point-marker"/>
-                    {dropoffLocation}
+                <div className="Offer-card-location start">
+                    <div className="point-date">
+                        {formatDate(pickupStart, 'd mmm')}
+                    </div>
+                    <div className="point-marker start"/>
+                    <div className="location-info">
+                        <div className="location-type">
+                            Pickup
+                        </div>
+                        <div className="location-area">
+                            {pickupLocation}
+                        </div>
+                        <div className="location-timings">
+                            <i className="far fa-clock"/> &nbsp; {formatDate(pickupStart, "hh:MMtt")}&nbsp;–&nbsp;{formatDate(pickupEnd, "hh:MMtt (Z)")}
+                        </div>
+                    </div>
+                </div>
+
+                <div className="Offer-card-location end">
+                    <div className="point-date">
+                        {formatDate(dropoffStart, 'd mmm')}
+                    </div>
+                    <div className="point-marker end"/>
+                    <div className="location-info">
+                        <div className="location-type">
+                            Dropoff
+                        </div>
+                        <div className="location-area">
+                            {dropoffLocation}
+                        </div>
+                        <div className="location-timings">
+                            <i className="far fa-clock"/> &nbsp; {formatDate(dropoffStart, "hh:MMtt")}&nbsp;–&nbsp;{formatDate(dropoffEnd, "hh:MMtt (Z)")}
+                        </div>
+                    </div>
                 </div>
 
                 <div className="Offer-card-offer">
+                    <div className="Offer-card-label">Price</div>
                     ${numberWithCommas(this.props.offer.offer)}
                 </div>
 
@@ -61,13 +91,6 @@ class Offer extends React.Component {
                     {this.props.offer.miles} miles
                 </div>
 
-                <br/><br/>
-
-                Pickup: {formatDate(pickupStart, "d mmm yyyy hh:MM tt")}&nbsp;–&nbsp;{formatDate(pickupEnd, "hh:MM tt Z")}
-
-                <br/><br/>
-
-                Dropoff: {formatDate(dropoffStart, "d mmm yyyy hh:MM tt")}&nbsp;–&nbsp;{formatDate(dropoffEnd, "hh:MM tt Z")}
                 <div className="Offer-card-view">View</div>
             </div>
         );
