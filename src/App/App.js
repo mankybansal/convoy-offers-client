@@ -153,6 +153,13 @@ class OfferViewer extends React.Component {
     }
 
     updateOffers() {
+
+        this.setState({
+            isLoaded: false,
+            error: false,
+            offers: [],
+        });
+
         let params =
             "sort=" + this.state.sortMethod +
             "&order=" + this.state.orderMethod +
@@ -161,22 +168,25 @@ class OfferViewer extends React.Component {
 
         console.log("update params: " + params);
 
-        fetch("https://convoy-frontend-homework-api.herokuapp.com/offers?" + params)
-            .then(response => response.json())
-            .then((response) => {
-                this.setState({
-                    isLoaded: true,
-                    offers: response,
-                    error: false
+        setTimeout(function () {
+            fetch("https://convoy-frontend-homework-api.herokuapp.com/offers?" + params)
+                .then(response => response.json())
+                .then((response) => {
+                    this.setState({
+                        isLoaded: true,
+                        offers: response,
+                        error: false
+                    });
+                })
+                .catch((error) => {
+                    console.log("ERROR: " + error);
+                    this.setState({
+                        isLoaded: true,
+                        error: true
+                    });
                 });
-            })
-            .catch((error) => {
-                console.log("ERROR: " + error);
-                this.setState({
-                    isLoaded: true,
-                    error: true
-                });
-            });
+        }.bind(this), 1000);  // rate limit API calls
+
     }
 
     componentDidMount() {
@@ -295,7 +305,6 @@ class App extends Component {
 export default App;
 
 
-// todo: do table styling instead
 // todo: add user profile
 // todo: add on click for offer
 // todo: add map if possible
