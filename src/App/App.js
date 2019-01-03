@@ -1,215 +1,8 @@
 import React, {Component} from 'react';
-import logo from '../Resources/convoy-logo.png';
+import logo from './Resources/convoy-logo.png';
 import './App.css';
-import formatDate from 'dateformat'
-
-const ORDER = {
-    ASC: 'desc',
-    DESC: 'asc'
-};
-
-const VIEWS = {
-    cards: 0,
-    table: 1
-};
-
-const SHOW_LIMITS = [
-    10, 20, 50, 100, 200, 500, 1000
-];
-
-let toggleOrder = (currentOrder) => {
-    return (currentOrder === ORDER.ASC) ? ORDER.DESC : ORDER.ASC;
-};
-
-function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-
-function camelCase(x) {
-    let result = x.replace(/([A-Z])/g, " $1");
-    return (result.charAt(0).toUpperCase() + result.slice(1)); // capitalize the first letter - as an example.
-}
-
-class Offer extends React.Component {
-    render() {
-
-        let pickupStart = new Date(this.props.offer.origin.pickup.start);
-        let pickupEnd = new Date(this.props.offer.origin.pickup.end);
-        let dropoffStart = new Date(this.props.offer.destination.dropoff.start);
-        let dropoffEnd = new Date(this.props.offer.destination.dropoff.end);
-
-        let pickupLocation = this.props.offer.origin.city + ", " + this.props.offer.origin.state;
-        let dropoffLocation = this.props.offer.destination.city + ", " + this.props.offer.destination.state;
-
-        return (
-            <div className="Offer-card">
-                <div className="Offer-card-location start">
-                    <div className="point-date">
-                        {formatDate(pickupStart, 'd mmm')}
-                    </div>
-                    <div className="point-marker start"/>
-                    <div className="location-info">
-                        <div className="location-type">
-                            Pickup
-                        </div>
-                        <div className="location-area">
-                            {pickupLocation}
-                        </div>
-                        <div className="location-timings">
-                            <i className="far fa-clock"/> &nbsp; {formatDate(pickupStart, "hh:MMtt")}&nbsp;–&nbsp;{formatDate(pickupEnd, "hh:MMtt (Z)")}
-                        </div>
-                    </div>
-                </div>
-
-                <div className="Offer-card-location end">
-                    <div className="point-date">
-                        {formatDate(dropoffStart, 'd mmm')}
-                    </div>
-                    <div className="point-marker end"/>
-                    <div className="location-info">
-                        <div className="location-type">
-                            Dropoff
-                        </div>
-                        <div className="location-area">
-                            {dropoffLocation}
-                        </div>
-                        <div className="location-timings">
-                            <i className="far fa-clock"/> &nbsp; {formatDate(dropoffStart, "hh:MMtt")}&nbsp;–&nbsp;{formatDate(dropoffEnd, "hh:MMtt (Z)")}
-                        </div>
-                    </div>
-                </div>
-
-                <div className="Offer-card-offer">
-                    <div className="Offer-card-label">Price</div>
-                    ${numberWithCommas(this.props.offer.offer)}
-                </div>
-
-                <br/>
-
-                <div className="Offer-card-dist">
-                    {this.props.offer.miles} miles
-                </div>
-
-                <div className="Offer-card-view">View</div>
-            </div>
-        );
-    }
-}
-
-class OfferTable extends React.Component {
-    render() {
-
-        let pickupStart = new Date(this.props.offer.origin.pickup.start);
-        let pickupEnd = new Date(this.props.offer.origin.pickup.end);
-        let dropoffStart = new Date(this.props.offer.destination.dropoff.start);
-        let dropoffEnd = new Date(this.props.offer.destination.dropoff.end);
-
-        let pickupLocation = this.props.offer.origin.city + ", " + this.props.offer.origin.state;
-        let dropoffLocation = this.props.offer.destination.city + ", " + this.props.offer.destination.state;
-
-        return (
-            <div className="Offer-table">
-
-                <div className="Offer-card-location start">
-                    <div className="point-date">
-                        {formatDate(pickupStart, 'd mmm')}
-                    </div>
-                    <div className="point-marker start"/>
-                    <div className="location-info">
-                        <div className="location-type">
-                            Pickup
-                        </div>
-                        <div className="location-area">
-                            {pickupLocation}
-                        </div>
-                        <div className="location-timings">
-                            <i className="far fa-clock"/> &nbsp; {formatDate(pickupStart, "hh:MMtt")}&nbsp;–&nbsp;{formatDate(pickupEnd, "hh:MMtt (Z)")}
-                        </div>
-                    </div>
-                </div>
-
-                <div className="Offer-card-location end">
-                    <div className="point-date">
-                        {formatDate(dropoffStart, 'd mmm')}
-                    </div>
-                    <div className="point-marker end"/>
-                    <div className="location-info">
-                        <div className="location-type">
-                            Dropoff
-                        </div>
-                        <div className="location-area">
-                            {dropoffLocation}
-                        </div>
-                        <div className="location-timings">
-                            <i className="far fa-clock"/> &nbsp; {formatDate(dropoffStart, "hh:MMtt")}&nbsp;–&nbsp;{formatDate(dropoffEnd, "hh:MMtt (Z)")}
-                        </div>
-                    </div>
-                </div>
-
-                <div className="Offer-card-offer">
-                    <div className="Offer-card-label">Price</div>
-                    ${numberWithCommas(this.props.offer.offer)}
-                </div>
-
-                <br/>
-
-                <div className="Offer-card-dist">
-                    {this.props.offer.miles} miles
-                </div>
-
-                <div className="Offer-card-view">View</div>
-            </div>
-        );
-    }
-}
-
-class OfferViewer extends React.Component {
-    render() {
-        const {error, isLoaded, offers, view} = this.props.state;
-
-        if (error) {
-            return (
-                <div className="App-loading-container">
-                    <i className="fa fa-exclamation-triangle"/> &nbsp;&nbsp;&nbsp; Error fetching offers...
-                    <br/>
-                    <br/>
-                    <button onClick={this.props.updateOffers}>Try again
-                        <i className="fa fa-redo"/></button>
-                </div>
-            );
-        }
-
-        if (!isLoaded) {
-            return (
-                <div className="App-loading-container">
-                    <i className="fa fa-circle-notch fa-spin"/> &nbsp;&nbsp;&nbsp; Loading Offers...
-                </div>
-            );
-        }
-
-        if (view === VIEWS.cards) {
-            return (
-                <div>
-                    <div className="Offers-container">
-                        {offers.map((offer, index) => (
-                            <Offer key={index} offer={offer}/>
-                        ))}
-                    </div>
-                </div>
-            );
-        } else {
-            return (
-                <div>
-                    <div className="Offers-container">
-                        {offers.map((offer, index) => (
-                            <OfferTable key={index} offer={offer}/>
-                        ))}
-                    </div>
-                </div>
-            );
-        }
-    }
-}
+import { Utils, Consts } from './Utils'
+import OfferViewer from './Components/OfferViewer'
 
 class App extends Component {
     constructor(props) {
@@ -226,53 +19,53 @@ class App extends Component {
             isLoaded: false,
             offers: [],
             sortMethod: 'pickupDate',
-            orderMethod: ORDER.DESC,
-            showCount: SHOW_LIMITS[2],
+            orderMethod: Consts.ORDER.DESC,
+            showCount: Consts.SHOW_LIMITS[2],
             showOffset: 0,
-            view: VIEWS.cards
+            view: Consts.VIEWS.cards
         };
     }
 
-    viewTypeHandler(view) {
+    viewTypeHandler = (view) => {
         this.setState({
             view: view
         });
     }
 
-    pageHandler(pageCount) {
+    pageHandler = (pageCount) => {
         this.setState({
             showOffset: Math.max(0, this.state.showOffset + pageCount * this.state.showCount)
         }, () => {
             this.updateOffers()
         });
-    }
+    };
 
-    sortHandler(sortMethod) {
+    sortHandler = (sortMethod) => {
         if (sortMethod === this.state.sortMethod) {
-            console.log("Same sort in " + toggleOrder(this.state.orderMethod));
+            console.log("Same sort in " + Utils.toggleOrder(this.state.orderMethod));
             this.setState({
-                orderMethod: toggleOrder(this.state.orderMethod),
+                orderMethod: Utils.toggleOrder(this.state.orderMethod),
             }, () => {
                 this.updateOffers()
             });
         } else {
-            console.log("Different sort by " + sortMethod + " in " + ORDER.DESC);
+            console.log("Different sort by " + sortMethod + " in " + Consts.ORDER.DESC);
             this.setState({
-                orderMethod: ORDER.DESC,
+                orderMethod: Consts.ORDER.DESC,
                 sortMethod: sortMethod
             }, () => {
                 this.updateOffers()
             });
         }
-    }
+    };
 
-    showCountHandler(event) {
+    showCountHandler = (event) => {
         this.setState({
             showCount: parseInt(event.target.value)
         }, () => {
             this.updateOffers()
         });
-    }
+    };
 
     updateOffers = () => {
 
@@ -308,7 +101,7 @@ class App extends Component {
                 });
             });
 
-    }
+    };
 
     componentDidMount() {
         this.updateOffers()
@@ -364,7 +157,7 @@ class App extends Component {
                         Date &nbsp;&nbsp;<i className="fa fa-sort"/></button>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sorted
                     by <span
-                    className="Offers-sort-method">{camelCase(this.state.sortMethod)}, {camelCase(this.state.orderMethod)}</span>
+                    className="Offers-sort-method">{Utils.camelCase(this.state.sortMethod)}, {Utils.camelCase(this.state.orderMethod)}</span>
                 </div>
 
                 <OfferViewer state={this.state} updateOffers={this.updateOffers}/>
@@ -379,7 +172,7 @@ class App extends Component {
                     <div className="Offers-pagenation-limit">
                         Showing &nbsp;
                         <select id="showCount" onChange={this.showCountHandler} value={this.state.showCount}>
-                            {SHOW_LIMITS.map((limit, index) => (
+                            {Consts.SHOW_LIMITS.map((limit, index) => (
                                 <option key={index} value={limit}>
                                     {limit}
                                 </option>
@@ -389,10 +182,10 @@ class App extends Component {
                     </div>
                     <div className="Offers-pagenation-view">
                         <i className="fas fa-th-list selected" onClick={() => {
-                            this.viewTypeHandler(VIEWS.table)
+                            this.viewTypeHandler(Consts.VIEWS.table)
                         }}> </i>
                         <i className="fas fa-th-large" onClick={() => {
-                            this.viewTypeHandler(VIEWS.cards)
+                            this.viewTypeHandler(Consts.VIEWS.cards)
                         }}> </i>
                     </div>
                 </div>

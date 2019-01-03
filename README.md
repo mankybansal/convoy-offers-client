@@ -2,20 +2,18 @@
 
 Frontend Engineering Sample
 
-## Available Scripts
+### Running Project
 
-In the project directory, you can run:
+In the project directory, you can install dependencies using yarn
 
-### `npm start`
+```yarn install```
 
-Runs the app in the development mode.<br>
+Then start the server:
+
+```npm start```
+
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### `npm test`
+### Author
 
-Launches the test runner in the interactive watch mode.<br>
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Mayank Bansal - [sunny.bansal@gmail.com]
