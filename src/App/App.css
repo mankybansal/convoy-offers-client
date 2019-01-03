@@ -54,7 +54,7 @@
   z-index: 998;
 }
 
-.Offers-pagenation {
+.Offers-pagination {
   height: 60px;
   box-sizing: border-box;
   padding: 15px 150px;
@@ -70,14 +70,14 @@
   z-index: 997;
 }
 
-.Offers-pagenation-showing {
+.Offers-pagination-showing {
   width: 250px;
   display: inline-block;
   margin-left: 40px;
   text-align: center;
 }
 
-.Offers-pagenation-limit {
+.Offers-pagination-limit {
   width: 250px;
   display: inline-block;
   margin-left: 40px;
@@ -302,7 +302,7 @@ i.fa-clock {
   color: #AAA;
 }
 
-.Offers-pagenation-view {
+.Offers-pagination-view {
   float: right;
   padding: 5px;
   display: inline-block;

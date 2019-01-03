@@ -1,7 +1,7 @@
 import React from "react";
 import * as Consts from "../Utils/contants";
 import OfferCard from './OfferCard'
-import OfferRow from './OfferCard'
+import OfferRow from './OfferRow'
 
 class OfferViewer extends React.Component {
     render() {
@@ -13,8 +13,9 @@ class OfferViewer extends React.Component {
                     <i className="fa fa-exclamation-triangle"/> &nbsp;&nbsp;&nbsp; Error fetching offers...
                     <br/>
                     <br/>
-                    <button onClick={this.props.updateOffers}>Try again
-                        <i className="fa fa-redo"/></button>
+                    <button onClick={this.props.updateOffersHandler}>
+                        Try again <i className="fa fa-redo"/>
+                    </button>
                 </div>
             );
         }
@@ -29,22 +30,18 @@ class OfferViewer extends React.Component {
 
         if (view === Consts.VIEWS.cards) {
             return (
-                <div>
-                    <div className="Offers-container">
-                        {offers.map((offer, index) => (
-                            <OfferCard key={index} offer={offer}/>
-                        ))}
-                    </div>
+                <div className="Offers-container">
+                    {offers.map((offer, index) => (
+                        <OfferCard key={index} offer={offer}/>
+                    ))}
                 </div>
             );
         } else {
             return (
-                <div>
-                    <div className="Offers-container">
-                        {offers.map((offer, index) => (
-                            <OfferRow key={index} offer={offer}/>
-                        ))}
-                    </div>
+                <div className="Offers-container">
+                    {offers.map((offer, index) => (
+                        <OfferRow key={index} offer={offer}/>
+                    ))}
                 </div>
             );
         }
