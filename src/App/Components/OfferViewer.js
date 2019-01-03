@@ -12,7 +12,6 @@ class OfferViewer extends React.Component {
                 <div className="App-loading-container">
                     <i className="fa fa-exclamation-triangle"/> &nbsp;&nbsp;&nbsp; Error fetching offers...
                     <br/>
-                    <br/>
                     <button onClick={this.props.updateOffersHandler}>
                         Try again <i className="fa fa-redo"/>
                     </button>

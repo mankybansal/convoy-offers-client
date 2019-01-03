@@ -22,8 +22,8 @@ class App extends Component {
             error: false,
             isLoaded: false,
             offers: [],
-            sortMethod: 'pickupDate',
-            orderMethod: Consts.ORDER.DESC,
+            sortMethod: Consts.SORT_METHODS.pickupDate,
+            orderMethod: Consts.ORDER.ASC,
             showCount: Consts.SHOW_LIMITS[2],
             showOffset: 0,
             view: Consts.VIEWS.cards
@@ -53,7 +53,8 @@ class App extends Component {
             });
         } else {
             this.setState({
-                orderMethod: Consts.ORDER.DESC,
+                orderMethod: Consts.ORDER.ASC,
+                showOffset: 0,
                 sortMethod: sortMethod
             }, () => {
                 this.updateOffers()
@@ -82,6 +83,8 @@ class App extends Component {
             limit: this.state.showCount,
             offset: this.state.showOffset
         }).toString();
+
+        console.log(params);
 
         fetch("https://convoy-frontend-homework-api.herokuapp.com/offers?" + params)
             .then(response => response.json())
@@ -142,5 +145,4 @@ export default App;
 // todo: add user profile
 // todo: add on click for offer
 // todo: add map if possible
-// todo: add sorting direction buttons / asc/desc
 // todo: add sidebar with hamburger menu

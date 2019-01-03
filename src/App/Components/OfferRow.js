@@ -4,14 +4,15 @@ import { Utils }  from '../Utils'
 
 class OfferRow extends React.Component {
     render() {
+        const {offer} = this.props;
 
-        let pickupStart = new Date(this.props.offer.origin.pickup.start);
-        let pickupEnd = new Date(this.props.offer.origin.pickup.end);
-        let dropoffStart = new Date(this.props.offer.destination.dropoff.start);
-        let dropoffEnd = new Date(this.props.offer.destination.dropoff.end);
+        let pickupStart = new Date(offer.origin.pickup.start);
+        let pickupEnd = new Date(offer.origin.pickup.end);
+        let dropoffStart = new Date(offer.destination.dropoff.start);
+        let dropoffEnd = new Date(offer.destination.dropoff.end);
 
-        let pickupLocation = this.props.offer.origin.city + ", " + this.props.offer.origin.state;
-        let dropoffLocation = this.props.offer.destination.city + ", " + this.props.offer.destination.state;
+        let pickupLocation = offer.origin.city + ", " + offer.origin.state;
+        let dropoffLocation = offer.destination.city + ", " + offer.destination.state;
 
         return (
             <div className="Offer-table">
@@ -60,7 +61,7 @@ class OfferRow extends React.Component {
                 <br/>
 
                 <div className="Offer-card-dist">
-                    {this.props.offer.miles} miles
+                    {offer.miles} miles
                 </div>
 
                 <div className="Offer-card-view">View</div>

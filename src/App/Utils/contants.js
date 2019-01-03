@@ -1,6 +1,6 @@
 const ORDER = {
-    ASC: 'desc',
-    DESC: 'asc'
+    ASC: 'asc',
+    DESC: 'desc'
 };
 
 const VIEWS = {
@@ -12,8 +12,18 @@ const SHOW_LIMITS = [
     10, 20, 50, 100, 200, 500, 1000
 ];
 
+const SORT_METHODS = {
+    pickupDate: 'pickupDate',
+    dropoffDate: 'dropoffDate',
+    miles: 'miles',
+    price: 'price',
+    origin: 'origin',
+    destination: 'destination'
+};
+
 export {
     ORDER,
     VIEWS,
-    SHOW_LIMITS
+    SHOW_LIMITS,
+    SORT_METHODS
 }

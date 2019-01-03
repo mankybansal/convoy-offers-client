@@ -41,7 +41,7 @@
 .Offers-sort {
   height: 60px;
   box-sizing: border-box;
-  padding: 15px 150px;
+  padding: 8px 150px;
   text-align: left;
   width: 100%;
   background: #333;
@@ -186,16 +186,22 @@
 }
 
 button.dark {
-  padding: 7px 25px;
+  padding: 0 0 0 20px;
+  margin-right: 5px;
+  margin-top: 7px;
   outline: none;
   border: 0;
-  border-left: 2px solid #555;
   box-sizing: border-box;
-  background: transparent;
-  color: white;
+  background: transparent;color: #AAA;
+  border-left: 2px solid #555;
   font-size: 16px;
   font-family: Roboto-Light, sans-serif;
   cursor: pointer;
+}
+
+button.dark.selected {
+  color: white;
+  border-left: 2px solid #D74314;
 }
 
 button.light {
@@ -320,4 +326,8 @@ i.fa-th-large.selected {
 
 i.fa-th-list.selected {
   color: #D74314;
+}
+
+.fa-inverse {
+  opacity: .2;
 }
