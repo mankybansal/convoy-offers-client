@@ -8,6 +8,11 @@ const ORDER = {
     DESC: 'asc'
 };
 
+const VIEWS = {
+    cards: 0,
+    table: 1
+};
+
 const SHOW_LIMITS = [
     10, 20, 50, 100, 200, 500, 1000
 ];
@@ -25,12 +30,7 @@ function camelCase(x) {
     return (result.charAt(0).toUpperCase() + result.slice(1)); // capitalize the first letter - as an example.
 }
 
-
 class Offer extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
 
         let pickupStart = new Date(this.props.offer.origin.pickup.start);
@@ -42,7 +42,73 @@ class Offer extends React.Component {
         let dropoffLocation = this.props.offer.destination.city + ", " + this.props.offer.destination.state;
 
         return (
-            <div className="Offer-card" key={this.props.index}>
+            <div className="Offer-card">
+                <div className="Offer-card-location start">
+                    <div className="point-date">
+                        {formatDate(pickupStart, 'd mmm')}
+                    </div>
+                    <div className="point-marker start"/>
+                    <div className="location-info">
+                        <div className="location-type">
+                            Pickup
+                        </div>
+                        <div className="location-area">
+                            {pickupLocation}
+                        </div>
+                        <div className="location-timings">
+                            <i className="far fa-clock"/> &nbsp; {formatDate(pickupStart, "hh:MMtt")}&nbsp;–&nbsp;{formatDate(pickupEnd, "hh:MMtt (Z)")}
+                        </div>
+                    </div>
+                </div>
+
+                <div className="Offer-card-location end">
+                    <div className="point-date">
+                        {formatDate(dropoffStart, 'd mmm')}
+                    </div>
+                    <div className="point-marker end"/>
+                    <div className="location-info">
+                        <div className="location-type">
+                            Dropoff
+                        </div>
+                        <div className="location-area">
+                            {dropoffLocation}
+                        </div>
+                        <div className="location-timings">
+                            <i className="far fa-clock"/> &nbsp; {formatDate(dropoffStart, "hh:MMtt")}&nbsp;–&nbsp;{formatDate(dropoffEnd, "hh:MMtt (Z)")}
+                        </div>
+                    </div>
+                </div>
+
+                <div className="Offer-card-offer">
+                    <div className="Offer-card-label">Price</div>
+                    ${numberWithCommas(this.props.offer.offer)}
+                </div>
+
+                <br/>
+
+                <div className="Offer-card-dist">
+                    {this.props.offer.miles} miles
+                </div>
+
+                <div className="Offer-card-view">View</div>
+            </div>
+        );
+    }
+}
+
+class OfferTable extends React.Component {
+    render() {
+
+        let pickupStart = new Date(this.props.offer.origin.pickup.start);
+        let pickupEnd = new Date(this.props.offer.origin.pickup.end);
+        let dropoffStart = new Date(this.props.offer.destination.dropoff.start);
+        let dropoffEnd = new Date(this.props.offer.destination.dropoff.end);
+
+        let pickupLocation = this.props.offer.origin.city + ", " + this.props.offer.origin.state;
+        let dropoffLocation = this.props.offer.destination.city + ", " + this.props.offer.destination.state;
+
+        return (
+            <div className="Offer-table">
 
                 <div className="Offer-card-location start">
                     <div className="point-date">
@@ -98,6 +164,54 @@ class Offer extends React.Component {
 }
 
 class OfferViewer extends React.Component {
+    render() {
+        const {error, isLoaded, offers, view} = this.props.state;
+
+        if (error) {
+            return (
+                <div className="App-loading-container">
+                    <i className="fa fa-exclamation-triangle"/> &nbsp;&nbsp;&nbsp; Error fetching offers...
+                    <br/>
+                    <br/>
+                    <button onClick={this.props.updateOffers}>Try again
+                        <i className="fa fa-redo"/></button>
+                </div>
+            );
+        }
+
+        if (!isLoaded) {
+            return (
+                <div className="App-loading-container">
+                    <i className="fa fa-circle-notch fa-spin"/> &nbsp;&nbsp;&nbsp; Loading Offers...
+                </div>
+            );
+        }
+
+        if (view === VIEWS.cards) {
+            return (
+                <div>
+                    <div className="Offers-container">
+                        {offers.map((offer, index) => (
+                            <Offer key={index} offer={offer}/>
+                        ))}
+                    </div>
+                </div>
+            );
+        } else {
+            return (
+                <div>
+                    <div className="Offers-container">
+                        {offers.map((offer, index) => (
+                            <OfferTable key={index} offer={offer}/>
+                        ))}
+                    </div>
+                </div>
+            );
+        }
+    }
+}
+
+class App extends Component {
     constructor(props) {
         super(props);
 
@@ -105,6 +219,7 @@ class OfferViewer extends React.Component {
         this.sortHandler = this.sortHandler.bind(this);
         this.pageHandler = this.pageHandler.bind(this);
         this.showCountHandler = this.showCountHandler.bind(this);
+        this.viewTypeHandler = this.viewTypeHandler.bind(this);
 
         this.state = {
             error: false,
@@ -114,7 +229,14 @@ class OfferViewer extends React.Component {
             orderMethod: ORDER.DESC,
             showCount: SHOW_LIMITS[2],
             showOffset: 0,
+            view: VIEWS.cards
         };
+    }
+
+    viewTypeHandler(view) {
+        this.setState({
+            view: view
+        });
     }
 
     pageHandler(pageCount) {
@@ -152,7 +274,7 @@ class OfferViewer extends React.Component {
         });
     }
 
-    updateOffers() {
+    updateOffers = () => {
 
         this.setState({
             isLoaded: false,
@@ -160,32 +282,31 @@ class OfferViewer extends React.Component {
             offers: [],
         });
 
-        let params =
-            "sort=" + this.state.sortMethod +
-            "&order=" + this.state.orderMethod +
-            "&limit=" + this.state.showCount +
-            "&offset=" + this.state.showOffset;
+        let params = new URLSearchParams({
+            sort: this.state.sortMethod,
+            order: this.state.orderMethod,
+            limit: this.state.showCount,
+            offset: this.state.showOffset
+        }).toString();
 
-        console.log("update params: " + params);
+        console.log("Updated params: " + params);
 
-        setTimeout(function () {
-            fetch("https://convoy-frontend-homework-api.herokuapp.com/offers?" + params)
-                .then(response => response.json())
-                .then((response) => {
-                    this.setState({
-                        isLoaded: true,
-                        offers: response,
-                        error: false
-                    });
-                })
-                .catch((error) => {
-                    console.log("ERROR: " + error);
-                    this.setState({
-                        isLoaded: true,
-                        error: true
-                    });
+        fetch("https://convoy-frontend-homework-api.herokuapp.com/offers?" + params)
+            .then(response => response.json())
+            .then((response) => {
+                this.setState({
+                    isLoaded: true,
+                    offers: response,
+                    error: false
                 });
-        }.bind(this), 1000);  // rate limit API calls
+            })
+            .catch((error) => {
+                console.log("ERROR: " + error);
+                this.setState({
+                    isLoaded: true,
+                    error: true
+                });
+            });
 
     }
 
@@ -194,10 +315,9 @@ class OfferViewer extends React.Component {
     }
 
     render() {
-        const {error, isLoaded, offers, showOffset} = this.state;
+        const {showOffset, offers} = this.state;
 
         let prevPageButton, nextPageButton;
-
 
         // Make sure prev page button doesn't show up when showing first offer
         if (showOffset > 0) {
@@ -220,74 +340,6 @@ class OfferViewer extends React.Component {
                 <button className="light disabled">Next Page &nbsp;&nbsp;<i className="fa fa-angle-right"/></button>;
         }
 
-        if (error) {
-            return (
-                <div>
-                    <br/><br/><br/><br/><br/><br/><br/>Error loading results...
-                </div>
-            );
-        } else if (!isLoaded) {
-            return (
-                <div className="App-loading-container">
-                    <i className="fa fa-circle-notch fa-spin"/> &nbsp;&nbsp;&nbsp; Loading Offers...
-                </div>
-            );
-        } else {
-            return (
-
-                <div>
-                    <div className="Offers-sort">
-                        <button className="dark" onClick={() => this.sortHandler('origin')}>Origin &nbsp;&nbsp;<i
-                            className="fa fa-sort"/></button>
-                        <button className="dark"
-                                onClick={() => this.sortHandler('destination')}>Destination &nbsp;&nbsp;<i
-                            className="fa fa-sort"/></button>
-                        <button className="dark" onClick={() => this.sortHandler('price')}>Price &nbsp;&nbsp;<i
-                            className="fa fa-sort"/></button>
-                        <button className="dark" onClick={() => this.sortHandler('miles')}>Miles &nbsp;&nbsp;<i
-                            className="fa fa-sort"/></button>
-                        <button className="dark" onClick={() => this.sortHandler('pickupDate')}>Pickup Date &nbsp;&nbsp;
-                            <i className="fa fa-sort"/></button>
-                        <button className="dark" onClick={() => this.sortHandler('dropoffDate')}>Dropoff
-                            Date &nbsp;&nbsp;<i className="fa fa-sort"/></button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sorted
-                        by <span
-                        className="Offers-sort-method">{camelCase(this.state.sortMethod)}, {camelCase(this.state.orderMethod)}</span>
-                    </div>
-
-                    <div className="Offers-pagenation">
-                        {prevPageButton}
-                        {nextPageButton}
-                        <div className="Offers-pagenation-showing">
-                            Showing
-                            offers <strong>{parseInt(this.state.showOffset) + 1}</strong> to <strong>{parseInt(this.state.showOffset) + offers.length}</strong>
-                        </div>
-                        <div className="Offers-pagenation-limit">
-                            Showing &nbsp;
-                            <select id="showCount" onChange={this.showCountHandler} value={this.state.showCount}>
-                                {SHOW_LIMITS.map((limit, index) => (
-                                    <option key={index} value={limit}>
-                                        {limit}
-                                    </option>
-                                ))}
-                            </select>
-                            &nbsp; per page
-                        </div>
-                    </div>
-
-                    <div className="Offers-container">
-                        {offers.map((offer, index) => (
-                            <Offer index={index} offer={offer}/>
-                        ))}
-                    </div>
-                </div>
-            );
-        }
-    }
-}
-
-class App extends Component {
-    render() {
         return (
             <div className="App">
                 <header className="App-header">
@@ -295,7 +347,55 @@ class App extends Component {
                     <div className="App-title">Freight Offers</div>
                 </header>
 
-                <OfferViewer/>
+                <div className="Offers-sort">
+                    <button className="dark" onClick={() => this.sortHandler('origin')}>Origin &nbsp;&nbsp;<i
+                        className="fa fa-sort"/></button>
+                    <button className="dark"
+                            onClick={() => this.sortHandler('destination')}>Destination &nbsp;&nbsp;<i
+                        className="fa fa-sort"/></button>
+                    <button className="dark" onClick={() => this.sortHandler('price')}>Price &nbsp;&nbsp;<i
+                        className="fa fa-sort"/></button>
+                    <button className="dark" onClick={() => this.sortHandler('miles')}>Miles &nbsp;&nbsp;<i
+                        className="fa fa-sort"/></button>
+                    <button className="dark" onClick={() => this.sortHandler('pickupDate')}>Pickup
+                        Date &nbsp;&nbsp;
+                        <i className="fa fa-sort"/></button>
+                    <button className="dark" onClick={() => this.sortHandler('dropoffDate')}>Dropoff
+                        Date &nbsp;&nbsp;<i className="fa fa-sort"/></button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sorted
+                    by <span
+                    className="Offers-sort-method">{camelCase(this.state.sortMethod)}, {camelCase(this.state.orderMethod)}</span>
+                </div>
+
+                <OfferViewer state={this.state} updateOffers={this.updateOffers}/>
+
+                <div className="Offers-pagenation">
+                    {prevPageButton}
+                    {nextPageButton}
+                    <div className="Offers-pagenation-showing">
+                        Showing
+                        offers <strong>{parseInt(this.state.showOffset) + 1}</strong> to <strong>{parseInt(this.state.showOffset) + offers.length}</strong>
+                    </div>
+                    <div className="Offers-pagenation-limit">
+                        Showing &nbsp;
+                        <select id="showCount" onChange={this.showCountHandler} value={this.state.showCount}>
+                            {SHOW_LIMITS.map((limit, index) => (
+                                <option key={index} value={limit}>
+                                    {limit}
+                                </option>
+                            ))}
+                        </select>
+                        &nbsp; per page
+                    </div>
+                    <div className="Offers-pagenation-view">
+                        <i className="fas fa-th-list selected" onClick={() => {
+                            this.viewTypeHandler(VIEWS.table)
+                        }}> </i>
+                        <i className="fas fa-th-large" onClick={() => {
+                            this.viewTypeHandler(VIEWS.cards)
+                        }}> </i>
+                    </div>
+                </div>
             </div>
         );
     }
@@ -308,6 +408,5 @@ export default App;
 // todo: add user profile
 // todo: add on click for offer
 // todo: add map if possible
-// todo: fix error screen and timeout
 // todo: add sorting direction buttons / asc/desc
 // todo: add sidebar with hamburger menu

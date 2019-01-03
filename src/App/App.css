@@ -93,6 +93,19 @@
   text-align: center;
 }
 
+.Offer-table {
+  box-sizing: border-box;
+  padding: 20px;
+  width: 100%;
+  text-align: left;
+  background: white;
+  font-family: Roboto-Regular, sans-serif;
+  box-shadow: 0 10px 50px rgba(0,0,0,0.05);
+  display: inline-block;
+  position: relative;
+  border-bottom: 1px solid #EEE;
+}
+
 .Offer-card {
   box-sizing: border-box;
   padding: 40px;
@@ -287,4 +300,24 @@ i.fa-sort {
 
 i.fa-clock {
   color: #AAA;
+}
+
+.Offers-pagenation-view {
+  float: right;
+  padding: 5px;
+  display: inline-block;
+}
+
+i.fa-th-list, i.fa-th-large {
+  margin: 0 10px;
+  font-size: 20px;
+  color: #AAA;
+}
+
+i.fa-th-large.selected {
+  color: #D74314;
+}
+
+i.fa-th-list.selected {
+  color: #D74314;
 }
