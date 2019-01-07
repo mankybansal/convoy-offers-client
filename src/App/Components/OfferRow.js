@@ -1,10 +1,10 @@
 import React from "react";
 import formatDate from "dateformat";
-import { Utils }  from '../Utils'
+import { Utils } from "../Utils";
 
 class OfferRow extends React.Component {
     render() {
-        const {offer} = this.props;
+        const { offer } = this.props;
 
         let pickupStart = new Date(offer.origin.pickup.start);
         let pickupEnd = new Date(offer.origin.pickup.end);
@@ -12,60 +12,34 @@ class OfferRow extends React.Component {
         let dropoffEnd = new Date(offer.destination.dropoff.end);
 
         let pickupLocation = offer.origin.city + ", " + offer.origin.state;
-        let dropoffLocation = offer.destination.city + ", " + offer.destination.state;
+        let dropoffLocation =
+            offer.destination.city + ", " + offer.destination.state;
 
         return (
-            <div className="Offer-table">
-
-                <div className="Offer-card-location start">
-                    <div className="point-date">
-                        {formatDate(pickupStart, 'd mmm')}
-                    </div>
-                    <div className="point-marker start"/>
-                    <div className="location-info">
-                        <div className="location-type">
-                            Pickup
-                        </div>
-                        <div className="location-area">
-                            {pickupLocation}
-                        </div>
-                        <div className="location-timings">
-                            <i className="far fa-clock"/> &nbsp; {formatDate(pickupStart, "hh:MMtt")}&nbsp;–&nbsp;{formatDate(pickupEnd, "hh:MMtt (Z)")}
-                        </div>
-                    </div>
-                </div>
-
-                <div className="Offer-card-location end">
-                    <div className="point-date">
-                        {formatDate(dropoffStart, 'd mmm')}
-                    </div>
-                    <div className="point-marker end"/>
-                    <div className="location-info">
-                        <div className="location-type">
-                            Dropoff
-                        </div>
-                        <div className="location-area">
-                            {dropoffLocation}
-                        </div>
-                        <div className="location-timings">
-                            <i className="far fa-clock"/> &nbsp; {formatDate(dropoffStart, "hh:MMtt")}&nbsp;–&nbsp;{formatDate(dropoffEnd, "hh:MMtt (Z)")}
-                        </div>
-                    </div>
-                </div>
-
-                <div className="Offer-card-offer">
-                    <div className="Offer-card-label">Price</div>
-                    ${Utils.numberWithCommas(this.props.offer.offer)}
-                </div>
-
-                <br/>
-
-                <div className="Offer-card-dist">
-                    {offer.miles} miles
-                </div>
-
-                <div className="Offer-card-view">View</div>
-            </div>
+            <tr className="Offer-row">
+                <td>
+                    <i className="fa fa-map-marker-alt location-icon" />
+                    {pickupLocation}
+                </td>
+                <td>
+                    <i className="fa fa-map-marker-alt location-icon" />
+                    {dropoffLocation}
+                </td>
+                <td>
+                    <i className="far fa-calendar-alt location-icon" />
+                    {formatDate(dropoffStart, "mm/dd")} &nbsp;&nbsp;&nbsp;{" "}
+                    {formatDate(pickupStart, "h:MMt")}&nbsp;–&nbsp;
+                    {formatDate(pickupEnd, "h:MMt (Z)")}
+                </td>
+                <td>
+                    <i className="far fa-calendar-alt location-icon" />
+                    {formatDate(pickupStart, "mm/dd")} &nbsp;&nbsp;&nbsp;{" "}
+                    {formatDate(dropoffStart, "h:MMt")}&nbsp;–&nbsp;
+                    {formatDate(dropoffEnd, "h:MMt (Z)")}
+                </td>
+                <td>${Utils.numberWithCommas(this.props.offer.offer)}</td>
+                <td>{offer.miles} mi</td>
+            </tr>
         );
     }
 }

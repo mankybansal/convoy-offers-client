@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
-import './App.css';
-import {Utils, Consts} from './Utils'
+import React, { Component } from "react";
+import "./App.css";
+import { Consts } from "./Utils";
 
-import Header from './Components/Header'
-import OfferViewer from './Components/OfferViewer'
-import SortBar from './Components/SortBar'
-import PaginationBar from './Components/PaginationBar'
+import Header from "./Components/Header";
+import OfferViewer from "./Components/OfferViewer";
+import SortBar from "./Components/SortBar";
+import PaginationBar from "./Components/PaginationBar";
 
 class App extends Component {
     constructor(props) {
@@ -13,6 +13,7 @@ class App extends Component {
 
         // setup handlers
         this.sortHandler = this.sortHandler.bind(this);
+        this.orderHandler = this.orderHandler.bind(this);
         this.pageHandler = this.pageHandler.bind(this);
         this.showCountHandler = this.showCountHandler.bind(this);
         this.viewTypeHandler = this.viewTypeHandler.bind(this);
@@ -23,58 +24,73 @@ class App extends Component {
             isLoaded: false,
             offers: [],
             sortMethod: Consts.SORT_METHODS.pickupDate,
-            orderMethod: Consts.ORDER.ASC,
+            orderMethod: Consts.ORDER.asc,
             showCount: Consts.SHOW_LIMITS[2],
             showOffset: 0,
             view: Consts.VIEWS.cards
         };
     }
 
-    viewTypeHandler = (view) => {
+    viewTypeHandler = view => {
         this.setState({
             view: view
         });
     };
 
-    pageHandler = (pageCount) => {
-        this.setState({
-            showOffset: Math.max(0, this.state.showOffset + pageCount * this.state.showCount)
-        }, () => {
-            this.updateOffers()
-        });
+    pageHandler = pageCount => {
+        this.setState(
+            {
+                showOffset: Math.max(
+                    0,
+                    this.state.showOffset + pageCount * this.state.showCount
+                )
+            },
+            () => {
+                this.updateOffers();
+            }
+        );
     };
 
-    sortHandler = (sortMethod) => {
-        if (sortMethod === this.state.sortMethod) {
-            this.setState({
-                orderMethod: Utils.toggleOrder(this.state.orderMethod),
-            }, () => {
-                this.updateOffers()
-            });
-        } else {
-            this.setState({
-                orderMethod: Consts.ORDER.ASC,
+    sortHandler = event => {
+        this.setState(
+            {
                 showOffset: 0,
-                sortMethod: sortMethod
-            }, () => {
-                this.updateOffers()
-            });
-        }
+                sortMethod: event.target.value,
+                orderMethod: Consts.ORDER.asc
+            },
+            () => {
+                this.updateOffers();
+            }
+        );
     };
 
-    showCountHandler = (event) => {
-        this.setState({
-            showCount: parseInt(event.target.value)
-        }, () => {
-            this.updateOffers()
-        });
+    orderHandler = event => {
+        this.setState(
+            {
+                orderMethod: event.target.value
+            },
+            () => {
+                this.updateOffers();
+            }
+        );
+    };
+
+    showCountHandler = event => {
+        this.setState(
+            {
+                showCount: parseInt(event.target.value)
+            },
+            () => {
+                this.updateOffers();
+            }
+        );
     };
 
     updateOffers = () => {
         this.setState({
             isLoaded: false,
             error: false,
-            offers: [],
+            offers: []
         });
 
         let params = new URLSearchParams({
@@ -84,18 +100,16 @@ class App extends Component {
             offset: this.state.showOffset
         }).toString();
 
-        console.log(params);
-
         fetch("https://convoy-frontend-homework-api.herokuapp.com/offers?" + params)
             .then(response => response.json())
-            .then((response) => {
+            .then(response => {
                 this.setState({
                     isLoaded: true,
                     offers: response,
                     error: false
                 });
             })
-            .catch((error) => {
+            .catch(error => {
                 console.log("ERROR: " + error);
                 this.setState({
                     isLoaded: true,
@@ -105,20 +119,32 @@ class App extends Component {
     };
 
     componentDidMount() {
-        this.updateOffers()
+        this.updateOffers();
     }
 
     render() {
-        const {sortMethod, orderMethod, showCount, showOffset, offers} = this.state;
+        const {
+            view,
+            sortMethod,
+            orderMethod,
+            showCount,
+            showOffset,
+            offers
+        } = this.state;
 
         return (
             <div className="App">
-                <Header/>
+                <Header />
 
                 <SortBar
                     sortMethod={sortMethod}
                     orderMethod={orderMethod}
+                    view={view}
+                    showCount={showCount}
                     sortHandler={this.sortHandler}
+                    orderHandler={this.orderHandler}
+                    showCountHandler={this.showCountHandler}
+                    viewTypeHandler={this.viewTypeHandler}
                 />
 
                 <OfferViewer
@@ -128,11 +154,9 @@ class App extends Component {
 
                 <PaginationBar
                     offers={offers}
-                    showCount={showCount}
                     showOffset={showOffset}
+                    showCount={showCount}
                     pageHandler={this.pageHandler}
-                    showCountHandler={this.showCountHandler}
-                    viewTypeHandler={this.viewTypeHandler}
                 />
             </div>
         );
@@ -141,8 +165,5 @@ class App extends Component {
 
 export default App;
 
-
 // todo: add user profile
-// todo: add on click for offer
-// todo: add map if possible
 // todo: add sidebar with hamburger menu

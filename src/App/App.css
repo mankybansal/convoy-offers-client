@@ -1,333 +1,444 @@
 .App {
-  text-align: center;
+    text-align: center;
+    min-width: 800px;
 }
 
 .App-logo {
-  height: 20px;
-  margin-top: 10px;
-  float: left;
+    height: 20px;
+    margin-top: 10px;
+    float: left;
 }
 
 .App-title {
-  font-family: Roboto-Light, sans-serif;
-  float: left;
-  font-size: 20px;
-  padding: 10px 15px;
-  color: white;
-  box-sizing: border-box;
+    font-family: Roboto-Light, sans-serif;
+    float: left;
+    letter-spacing: 1px;
+    font-size: 20px;
+    padding: 10px 15px;
+    color: white;
+    box-sizing: border-box;
 }
 
 .App-header {
-  background-color: #D74314;
-  height: 60px;
-  width: 100%;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  position: fixed;
-  top: 0;
-  left: 0;
-  box-sizing: border-box;
-  padding: 10px 150px;
-  z-index: 999;
+    background-color: #D74314;
+    height: 60px;
+    width: 100%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    padding: 10px 10%;
+    z-index: 999;
+    min-width: 800px;
 }
 
 .App-loading-container {
-  width: 100%;
-  padding: 200px;
-  font-size: 25px;
-  font-family: Roboto-Light, sans-serif;
-  box-sizing: border-box;
+    width: 100%;
+    padding: 200px;
+    font-size: 25px;
+    font-family: Roboto-Light, sans-serif;
+    box-sizing: border-box;
 }
 
 .Offers-sort {
-  height: 60px;
-  box-sizing: border-box;
-  padding: 8px 150px;
-  text-align: left;
-  width: 100%;
-  background: #333;
-  color: white;
-  font-family: Roboto-Regular, sans-serif;
-  box-shadow: 0 0 50px rgba(0,0,0,0.15);
-  position: fixed;
-  top: 60px;
-  left: 0;
-  z-index: 998;
+    min-height: 60px;
+    box-sizing: border-box;
+    padding: 10px 10%;
+    display: inline-block;
+    text-align: left;
+    width: 100%;
+    background: #333;
+    color: white;
+    font-family: Roboto-Regular, sans-serif;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
+    position: fixed;
+    top: 60px;
+    left: 0;
+    z-index: 998;
+    min-width: 800px;
 }
 
 .Offers-pagination {
-  height: 60px;
-  box-sizing: border-box;
-  padding: 15px 150px;
-  text-align: left;
-  width: 100%;
-  background: white;
-  font-size: 14px;
-  font-family: Roboto-Regular, sans-serif;
-  box-shadow: 0 0 50px rgba(0,0,0,0.15);
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  z-index: 997;
+    height: 60px;
+    box-sizing: border-box;
+    padding: 15px 10%;
+    text-align: left;
+    width: 100%;
+    background: white;
+    font-size: 16px;
+    font-family: Roboto-Regular, sans-serif;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 997;
+    min-width: 800px;
 }
 
 .Offers-pagination-showing {
-  width: 250px;
-  display: inline-block;
-  margin-left: 40px;
-  text-align: center;
-}
-
-.Offers-pagination-limit {
-  width: 250px;
-  display: inline-block;
-  margin-left: 40px;
-  text-align: center;
+    display: inline-block;
+    float: right;
+    padding: 7px 0;
 }
 
 .Offers-container {
-  height: 100%;
-  width: 100%;
-  background: #FAFAFA;
-  padding: 120px;
-  box-sizing: border-box;
-  text-align: center;
+    height: 100%;
+    width: 100%;
+    display: inline-block;
+    background: #FAFAFA;
+    padding: 120px 10%;
+    box-sizing: border-box;
+    min-width: 800px;
 }
 
-.Offer-table {
-  box-sizing: border-box;
-  padding: 20px;
-  width: 100%;
-  text-align: left;
-  background: white;
-  font-family: Roboto-Regular, sans-serif;
-  box-shadow: 0 10px 50px rgba(0,0,0,0.05);
-  display: inline-block;
-  position: relative;
-  border-bottom: 1px solid #EEE;
+.Offers-table {
+    width: calc(80% + 40px);
+    height: 100%;
+    margin-top: 120px;
+    margin-left: calc(10% - 20px);
+    border: 0;
+    border-collapse: collapse;
+    min-width: 1200px;
+    overflow-x: scroll;
+}
+
+th {
+    height: 60px;
+    padding: 20px;
+    box-sizing: border-box;
+    font-family: Roboto-Medium, sans-serif;
+    text-transform: uppercase;
+    color: #D74314;
+
+}
+
+tr, .Offer-row {
+    height: 60px;
+    text-align: left;
+    font-size: 14px;
+    background: white;
+    font-family: Roboto-Regular, sans-serif;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid #EEE;
+}
+
+td {
+    padding: 20px;
+}
+
+.location-icon {
+    opacity: .2;
+    margin-right: 5px;
 }
 
 .Offer-card {
-  box-sizing: border-box;
-  padding: 40px;
-  width: 100%;
-  max-width: 800px;
-  text-align: left;
-  background: white;
-  font-family: Roboto-Regular, sans-serif;
-  box-shadow: 0 10px 50px rgba(0,0,0,0.05);
-  margin-top: 50px;
-  display: inline-block;
-  border-radius: 10px;
-  position: relative;
+    box-sizing: border-box;
+    padding: 40px;
+    width: 100%;
+    max-width: 1200px;
+    min-width: 600px;
+    text-align: left;
+    background: white;
+    font-family: Roboto-Regular, sans-serif;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.05);
+    margin-top: 50px;
+    display: inline-block;
+    border-radius: 10px;
+    position: relative;
+    float: left;
+    margin-right: 20px;
 }
 
 .Offer-card-route {
-  color: #333;
-  font-size: 25px;
-  line-height: normal;
-  font-family: Roboto-Regular, sans-serif;
-  display: inline-block;
-  width: 100%;
+    color: #333;
+    font-size: 25px;
+    line-height: normal;
+    font-family: Roboto-Regular, sans-serif;
+    display: inline-block;
+    width: 100%;
 }
 
-
 .Offer-card-offer {
-  color: black;
-  font-size: 30px;
-  position: absolute;
-  right: 40px;
-  top: 45px;
-  line-height: normal;
-  font-family: Roboto-Regular, sans-serif;
-  display: inline-block;
-  text-align: right;
+    color: #00b098;
+    font-size: 30px;
+    position: absolute;
+    right: 40px;
+    top: 45px;
+    line-height: normal;
+    font-family: Roboto-Regular, sans-serif;
+    display: inline-block;
+    text-align: right;
 }
 
 .Offer-card-label {
-  text-transform: uppercase;
-  color: #777;
-  font-family: Roboto-Regular, sans-serif;
-  font-size: 16px;
-  margin-bottom: 7px;
+    text-transform: uppercase;
+    color: #777;
+    font-family: Roboto-Regular, sans-serif;
+    font-size: 16px;
+    margin-bottom: 7px;
 }
 
 .Offer-card-dist {
-  padding: 6px 10px;
-  border-radius: 13px;
-  background: #EAF5F4;
-  color: #72B2AA;
-  font-size: 16px;
-  line-height: normal;
-  font-family: Roboto-Medium, sans-serif;
-  display: inline-block;
-  position: absolute;
-  right: 40px;
-  top: 120px;
+    padding: 6px 10px;
+    border-radius: 13px;
+    background: #EAF5F4;
+    color: #72B2AA;
+    font-size: 16px;
+    line-height: normal;
+    font-family: Roboto-Medium, sans-serif;
+    display: inline-block;
+    position: absolute;
+    right: 40px;
+    top: 120px;
 }
 
 .Offer-card-view {
-  color: #D74314;
-  padding: 7px 25px;
-  font-family: Roboto-Regular, sans-serif;
-  cursor: pointer;
-  display: inline-block;
-  font-size: 16px;
-  border-radius: 50px;
-  border: 2px solid #D74314;
-  position: absolute;
-  right: 40px;
-  bottom: 40px;
-}
-
-.Offers-sort-method {
-  font-family: Roboto-Bold, sans-serif;
-  color: #D74314;
-  margin-left: 10px;
-}
-
-button.dark {
-  padding: 0 0 0 20px;
-  margin-right: 5px;
-  margin-top: 7px;
-  outline: none;
-  border: 0;
-  box-sizing: border-box;
-  background: transparent;color: #AAA;
-  border-left: 2px solid #555;
-  font-size: 16px;
-  font-family: Roboto-Light, sans-serif;
-  cursor: pointer;
-}
-
-button.dark.selected {
-  color: white;
-  border-left: 2px solid #D74314;
+    color: #D74314;
+    padding: 7px 25px;
+    font-family: Roboto-Regular, sans-serif;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 50px;
+    border: 2px solid #D74314;
+    position: absolute;
+    right: 40px;
+    bottom: 40px;
 }
 
 button.light {
-  padding: 6px 15px;
-  outline: none;
-  border: 0;
-  box-sizing: border-box;
-  color: #D74314;
-  font-size: 18px;
-  font-family: Roboto-Medium, sans-serif;
-  cursor: pointer;
-  margin: 0 5px;
+    padding: 6px 15px;
+    outline: none;
+    border: 0;
+    box-sizing: border-box;
+    color: #D74314;
+    font-size: 18px;
+    font-family: Roboto-Medium, sans-serif;
+    cursor: pointer;
+    margin: 0 5px;
 }
 
 button.light.disabled {
-  color: #CCC;
+    color: #CCC;
 }
 
 i.fa-sort {
-  opacity: .5;
+    opacity: .5;
 }
 
 .Offer-card-location {
-  width: 100%;
-  display: inline-block;
+    width: 100%;
+    display: inline-block;
 }
 
 .Offer-card-location.start {
-  margin-bottom: 40px;
+    margin-bottom: 40px;
 }
 
 .point-date {
-  display: inline-block;
-  width: 60px;
-  vertical-align: middle;
-  color: #777;
+    display: inline-block;
+    width: 60px;
+    vertical-align: middle;
+    color: #777;
 }
 
-
 .point-marker {
-  vertical-align: middle;
-  height: 25px;
-  width: 25px;
-  margin: 10px 0;
-  border-radius: 50%;
-  border: 2px solid #D74314;
-  display: inline-block;
-  position: relative;
-  background: white;
+    vertical-align: middle;
+    height: 25px;
+    width: 25px;
+    margin: 10px 0;
+    border-radius: 50%;
+    border: 2px solid #D74314;
+    display: inline-block;
+    position: relative;
+    background: white;
 
 }
 
 .point-marker::before {
-  position: absolute;
-  content: " ";
-  margin: 7px;
-  height: 7px;
-  background: #D74314;
-  width: 7px;
-  border-radius: 50%;
-  border: 2px solid #D74314;
+    position: absolute;
+    content: " ";
+    margin: 7px;
+    height: 7px;
+    background: #D74314;
+    width: 7px;
+    border-radius: 50%;
+    border: 2px solid #D74314;
 }
 
 .point-marker.start::after {
-  position: absolute;
-  content: " ";
-  width: 2px;
-  left: 11px;
-  top: 28px;
-  height: 100px;
-  background: #DDD;
-  border-radius: 1px;
+    position: absolute;
+    content: " ";
+    width: 2px;
+    left: 11px;
+    top: 28px;
+    height: 100px;
+    background: #DDD;
+    border-radius: 1px;
 }
 
 .location-info {
-  display: inline-block;
-  width: 300px;
-  vertical-align: top;
-  margin: 5px 0 0 25px;
+    display: inline-block;
+    width: 300px;
+    vertical-align: top;
+    margin: 5px 0 0 25px;
 }
 
 .location-type {
-  text-transform: uppercase;
-  color: #777;
-  font-family: Roboto-Regular, sans-serif;
-  font-size: 16px;
+    text-transform: uppercase;
+    color: #777;
+    font-family: Roboto-Regular, sans-serif;
+    font-size: 16px;
 }
 
 .location-area {
-  color: black;
-  font-family: Roboto-Regular, sans-serif;
-  font-size: 30px;
-  margin-top: 7px;
+    color: black;
+    font-family: Roboto-Regular, sans-serif;
+    font-size: 30px;
+    margin-top: 7px;
 }
 
 .location-timings {
-  color: #333;
-  font-family: Roboto-Regular, sans-serif;
-  font-size: 16px;
-  margin-top: 7px;
+    color: #333;
+    font-family: Roboto-Regular, sans-serif;
+    font-size: 16px;
+    margin-top: 7px;
 }
 
 i.fa-clock {
-  color: #AAA;
+    color: #AAA;
 }
 
 .Offers-pagination-view {
-  float: right;
-  padding: 5px;
-  display: inline-block;
+    margin-left: 10px;
+    display: inline-block;
+    line-height: 1;
 }
 
 i.fa-th-list, i.fa-th-large {
-  margin: 0 10px;
-  font-size: 20px;
-  color: #AAA;
+    margin-right: 10px;
+    font-size: 20px;
+    color: #777;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
 }
 
 i.fa-th-large.selected {
-  color: #D74314;
+    color: #D74314;
 }
 
 i.fa-th-list.selected {
-  color: #D74314;
+    color: #D74314;
 }
 
-.fa-inverse {
-  opacity: .2;
+.SortBarContainer {
+    display: inline-block;
+    height: 100%;
+    padding: 10px 0;
+    box-sizing: border-box;
+    margin-right: 30px;
+    line-height: 1;
+}
+
+.SortBarLabel {
+    display: inline-block;
+    font-size: 16px;
+    font-family: Roboto-Light, sans-serif;
+    color: #AAA;
+    letter-spacing: 1px;
+    line-height: 1;
+    margin-top: 2px;
+}
+
+.SortBarSelect {
+    display: inline-block;
+    font-size: 16px;
+    font-family: Roboto-Regular, sans-serif;
+    margin-left: 10px;
+    outline: none;
+    border: none;
+    padding-right: 5px;
+    background: transparent;
+    color: #FFF;
+    letter-spacing: 0.5px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+}
+
+.user-profile {
+    float: right;
+    height: 100%;
+    line-height: 1;
+    display: inline-block;
+}
+
+.user-name {
+    font-size: 16px;
+    color: #FFF;
+    padding: 12px;
+    box-sizing: border-box;
+    font-family: Roboto-Light, sans-serif;
+    float: left;
+}
+
+.user-name-highlight {
+    font-size: 16px;
+    color: #FFF;
+    font-family: Roboto-Medium, sans-serif;
+}
+
+.user-avatar {
+    height: 40px;
+    width: 40px;
+    float: right;
+    background: green;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.1);
+    font-size: 30px;
+    padding: 5px 0;
+    color: #FFF;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.ViewSelect {
+    float: right;
+    margin-right: 0;
+}
+
+@media only screen and (max-width: 1200px) {
+    .Offers-table {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .App-header {
+        padding: 10px 20px;
+    }
+
+    .Offers-sort {
+        padding: 10px 20px;
+    }
+
+    .Offers-pagination {
+        padding: 15px 20px;
+    }
+
+    .Offers-container {
+        padding: 120px 20px;
+    }
+
+    .Offer-card {
+        margin-top: 20px;
+    }
+}
+
+@media only screen and (min-width: 2560px) {
+    .Offer-card {
+        max-width: calc((100%) / 2 - 50px);
+        margin: 25px;
+    }
 }

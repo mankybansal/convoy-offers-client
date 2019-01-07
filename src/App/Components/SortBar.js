@@ -1,85 +1,87 @@
-import {Component} from "react";
-import {Consts} from "../Utils";
+import { Component } from "react";
+import { Consts } from "../Utils";
 import React from "react";
-
-class SortButton extends Component {
-    render() {
-        const {label, sortMethod, currentSortMethod, currentOrderMethod} = this.props;
-
-        let sortSelected, sortUpInverse = 'fa-inverse', sortDownInverse = 'fa-inverse';
-
-        if (currentSortMethod === sortMethod) {
-            sortSelected = "selected"
-        }
-
-        if (sortSelected ) {
-            if (currentOrderMethod === Consts.ORDER.ASC) {
-                sortUpInverse = ''
-            } else {
-                sortDownInverse = ''
-            }
-        }
-
-        return (
-            <button className={`dark ${sortSelected}`} onClick={() => this.props.sortHandler(sortMethod)}>
-                {label}
-                <span className="fa-stack">
-                  <i className={`fa fa-sort-up fa-stack-1x ${sortUpInverse}`}> </i>
-                  <i className={`fa fa-sort-down fa-stack-1x ${sortDownInverse}`}> </i>
-                </span>
-            </button>
-        );
-    }
-}
+import { camelCase } from "../Utils/helpers";
 
 class SortBar extends Component {
     render() {
-        const {sortMethod, orderMethod} = this.props;
+        const { view, sortMethod, orderMethod, showCount } = this.props;
+
+        let tableSelected, cardsSelected;
+
+        if (view === Consts.VIEWS.cards) {
+            cardsSelected = "selected";
+        } else {
+            tableSelected = "selected";
+        }
 
         return (
             <div className="Offers-sort">
-                <SortButton
-                    label={"Origin"}
-                    currentSortMethod={sortMethod}
-                    currentOrderMethod={orderMethod}
-                    sortHandler={this.props.sortHandler}
-                    sortMethod={Consts.SORT_METHODS.origin}
-                />
-                <SortButton
-                    label={"Destination"}
-                    currentSortMethod={sortMethod}
-                    currentOrderMethod={orderMethod}
-                    sortHandler={this.props.sortHandler}
-                    sortMethod={Consts.SORT_METHODS.destination}
-                />
-                <SortButton
-                    label={"Price"}
-                    currentSortMethod={sortMethod}
-                    currentOrderMethod={orderMethod}
-                    sortHandler={this.props.sortHandler}
-                    sortMethod={Consts.SORT_METHODS.price}
-                />
-                <SortButton
-                    label={"Miles"}
-                    currentSortMethod={sortMethod}
-                    currentOrderMethod={orderMethod}
-                    sortHandler={this.props.sortHandler}
-                    sortMethod={Consts.SORT_METHODS.miles}
-                />
-                <SortButton
-                    label={"Pickup Date"}
-                    currentSortMethod={sortMethod}
-                    currentOrderMethod={orderMethod}
-                    sortHandler={this.props.sortHandler}
-                    sortMethod={Consts.SORT_METHODS.pickupDate}
-                />
-                <SortButton
-                    label={"Dropoff Date"}
-                    currentSortMethod={sortMethod}
-                    currentOrderMethod={orderMethod}
-                    sortHandler={this.props.sortHandler}
-                    sortMethod={Consts.SORT_METHODS.dropoffDate}
-                />
+                <div className="SortBarContainer">
+                    <div className="SortBarLabel">Sort by:</div>
+                    <select
+                        className="SortBarSelect"
+                        value={sortMethod}
+                        onChange={this.props.sortHandler}
+                    >
+                        {Object.keys(Consts.SORT_METHODS).map((method, index) => (
+                            <option key={index} value={method}>
+                                {camelCase(method)}
+                            </option>
+                        ))}
+                    </select>
+                    <i className="fa fa-chevron-down select-icon" />
+                </div>
+
+                <div className="SortBarContainer">
+                    <div className="SortBarLabel">Order:</div>
+                    <select
+                        className="SortBarSelect"
+                        value={orderMethod}
+                        onChange={this.props.orderHandler}
+                    >
+                        {Object.keys(Consts.ORDER).map((method, index) => (
+                            <option key={index} value={method}>
+                                {camelCase(method)}
+                            </option>
+                        ))}
+                    </select>
+                    <i className="fa fa-chevron-down select-icon" />
+                </div>
+
+                <div className="SortBarContainer">
+                    <div className="SortBarLabel">Show:</div>
+                    <select
+                        className="SortBarSelect"
+                        value={showCount}
+                        onChange={this.props.showCountHandler}
+                    >
+                        {Consts.SHOW_LIMITS.map((limit, index) => (
+                            <option key={index} value={limit}>
+                                {limit} per page
+                            </option>
+                        ))}
+                    </select>
+                    <i className="fa fa-chevron-down select-icon" />
+                </div>
+
+                <div className="SortBarContainer ViewSelect">
+                    <div className="SortBarLabel">View:</div>
+                    <div className="Offers-pagination-view">
+                        <i
+                            className={`fas fa-th-large ${cardsSelected}`}
+                            onClick={() => {
+                                this.props.viewTypeHandler(Consts.VIEWS.cards);
+                            }}
+                        />
+                        <i
+                            className={`fas fa-th-list ${tableSelected}`}
+                            onClick={() => {
+                                this.props.viewTypeHandler(Consts.VIEWS.table);
+                            }}
+                        />
+                    </div>
+                </div>
             </div>
         );
     }
