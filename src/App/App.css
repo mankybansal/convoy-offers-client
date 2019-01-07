@@ -3,24 +3,31 @@
     min-width: 800px;
 }
 
+.App-logo-container {
+    height: 60px;
+    padding: 20px;
+    box-sizing: border-box;
+    background: linear-gradient(90deg, #C74E29, #BF4528);
+    float: left;
+}
+
 .App-logo {
     height: 20px;
-    margin-top: 10px;
-    float: left;
 }
 
 .App-title {
     font-family: Roboto-Light, sans-serif;
     float: left;
+    margin-top: 10px;
     letter-spacing: 1px;
     font-size: 20px;
-    padding: 10px 15px;
-    color: white;
+    padding: 10px 20px;
+    color: #000;
     box-sizing: border-box;
 }
 
 .App-header {
-    background-color: #D74314;
+    background: linear-gradient(90deg, #FFF, #FAFAFA);
     height: 60px;
     width: 100%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -28,12 +35,12 @@
     top: 0;
     left: 0;
     box-sizing: border-box;
-    padding: 10px 10%;
+    padding: 0 10%;
     z-index: 999;
     min-width: 800px;
 }
 
-.App-loading-container {
+.App-status-container {
     width: 100%;
     padding: 200px;
     font-size: 25px;
@@ -68,7 +75,7 @@
     background: white;
     font-size: 16px;
     font-family: Roboto-Regular, sans-serif;
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
+    border-top: 1px solid #EEE;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -93,14 +100,15 @@
 }
 
 .Offers-table {
-    width: calc(80% + 40px);
+    width: 80%;
     height: 100%;
     margin-top: 120px;
-    margin-left: calc(10% - 20px);
+    margin-left: 10%;
     border: 0;
     border-collapse: collapse;
     min-width: 1200px;
     overflow-x: scroll;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.05);
 }
 
 th {
@@ -119,7 +127,6 @@ tr, .Offer-row {
     font-size: 14px;
     background: white;
     font-family: Roboto-Regular, sans-serif;
-    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.05);
     border-bottom: 1px solid #EEE;
 }
 
@@ -141,13 +148,21 @@ td {
     text-align: left;
     background: white;
     font-family: Roboto-Regular, sans-serif;
-    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.05);
-    margin-top: 50px;
+    border: 1px solid #EEE;
     display: inline-block;
-    border-radius: 10px;
     position: relative;
     float: left;
     margin-right: 20px;
+    transition: all ease .3s;
+    cursor: pointer;
+    margin-top: 50px;
+}
+
+.Offer-card:hover {
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
+    position: relative;
+    z-index: 800;
+    border: 1px solid #D74314;
 }
 
 .Offer-card-route {
@@ -160,7 +175,7 @@ td {
 }
 
 .Offer-card-offer {
-    color: #00b098;
+    color: #008A68;
     font-size: 30px;
     position: absolute;
     right: 40px;
@@ -217,10 +232,18 @@ button.light {
     font-family: Roboto-Medium, sans-serif;
     cursor: pointer;
     margin: 0 5px;
+    background: transparent;
+    transition: all ease .3s;
 }
 
 button.light.disabled {
     color: #CCC;
+    font-family: Roboto-Regular, sans-serif;
+}
+
+button.refresh {
+    margin-left: 40px;
+    float: right;
 }
 
 i.fa-sort {
@@ -280,7 +303,7 @@ i.fa-sort {
 
 .location-info {
     display: inline-block;
-    width: 300px;
+    width: 350px;
     vertical-align: top;
     margin: 5px 0 0 25px;
 }
@@ -306,6 +329,11 @@ i.fa-sort {
     margin-top: 7px;
 }
 
+.location-day {
+    font-family: Roboto-Medium, sans-serif;
+    color: #D74314;
+}
+
 i.fa-clock {
     color: #AAA;
 }
@@ -319,10 +347,11 @@ i.fa-clock {
 i.fa-th-list, i.fa-th-large {
     margin-right: 10px;
     font-size: 20px;
-    color: #777;
+    color: #555;
     display: inline-block;
     vertical-align: middle;
     cursor: pointer;
+    transition: all ease .3s;
 }
 
 i.fa-th-large.selected {
@@ -336,9 +365,9 @@ i.fa-th-list.selected {
 .SortBarContainer {
     display: inline-block;
     height: 100%;
-    padding: 10px 0;
+    padding: 10px 0 10px 20px;
+    margin-right: 10px;
     box-sizing: border-box;
-    margin-right: 30px;
     line-height: 1;
 }
 
@@ -370,15 +399,16 @@ i.fa-th-list.selected {
 
 .user-profile {
     float: right;
-    height: 100%;
+    height: 40px;
+    margin-top: 10px;
     line-height: 1;
     display: inline-block;
 }
 
 .user-name {
     font-size: 16px;
-    color: #FFF;
-    padding: 12px;
+    color: #000;
+    padding: 12px 6px;
     box-sizing: border-box;
     font-family: Roboto-Light, sans-serif;
     float: left;
@@ -386,7 +416,7 @@ i.fa-th-list.selected {
 
 .user-name-highlight {
     font-size: 16px;
-    color: #FFF;
+    color: #D74314;
     font-family: Roboto-Medium, sans-serif;
 }
 
@@ -394,12 +424,11 @@ i.fa-th-list.selected {
     height: 40px;
     width: 40px;
     float: right;
-    background: green;
     border-radius: 50%;
-    background: rgba(0, 0, 0, 0.1);
-    font-size: 30px;
-    padding: 5px 0;
-    color: #FFF;
+    line-height: normal;
+    font-size: 32px;
+    padding: 2px 0;
+    color: #DDD;
     text-align: center;
     box-sizing: border-box;
 }
@@ -409,18 +438,31 @@ i.fa-th-list.selected {
     margin-right: 0;
 }
 
+.App-menu {
+    position: absolute;
+    left: calc(5% - 30px);
+    width: 60px;
+    text-align: center;
+    top: 20px;
+    font-size: 20px;
+}
+
 @media only screen and (max-width: 1200px) {
     .Offers-table {
         width: 100%;
         margin-left: 0;
     }
 
+    .App-menu {
+        left: 0;
+    }
+
     .App-header {
-        padding: 10px 20px;
+        padding: 0 20px 0 60px;
     }
 
     .Offers-sort {
-        padding: 10px 20px;
+        padding: 10px 20px 0 0;
     }
 
     .Offers-pagination {

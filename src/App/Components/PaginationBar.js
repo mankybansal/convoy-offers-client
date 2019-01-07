@@ -5,53 +5,39 @@ class PaginationBar extends Component {
     render() {
         let { showOffset, showCount } = this.props;
 
-        let prevPageButton, nextPageButton;
-
-        // Make sure prev page button doesn't show up when showing first offer
-        if (this.props.showOffset > 0) {
-            prevPageButton = (
-                <button className="light" onClick={() => this.props.pageHandler(-1)}>
-                    <i className="fa fa-angle-left" />
-                    &nbsp;&nbsp; Previous Page
-                </button>
-            );
-        } else {
-            prevPageButton = (
-                <button className="light disabled">
-                    <i className="fa fa-angle-left" />
-                    &nbsp;&nbsp; Previous Page
-                </button>
-            );
-        }
+        // Make sure prev page button doesn't show up when offset = 0
+        let canClickPrev = this.props.showOffset > 0;
 
         // Make sure next page button doesn't show up when showing last offer
-        if (
+        let canClickNext =
             showOffset >= 0 &&
             this.props.offers.length > 0 &&
-            this.props.offers.length === showCount
-        ) {
-            nextPageButton = (
-                <button className="light" onClick={() => this.props.pageHandler(+1)}>
-                    Next Page {"  "}
-                    <i className="fa fa-angle-right" />
-                </button>
-            );
-        } else {
-            nextPageButton = (
-                <button className="light disabled">
-                    Next Page {"  "}
-                    <i className="fa fa-angle-right" />
-                </button>
-            );
-        }
+            this.props.offers.length === showCount;
 
         return (
             <div className="Offers-pagination">
-                {prevPageButton}
-                {nextPageButton}
+                <button className={`light ${canClickPrev ? "" : "disabled"}`}
+                        onClick={() => (canClickPrev ? this.props.pageHandler(-1) : false)}>
+                    <i className="fa fa-angle-left" />
+                    {"  "} Previous Page
+                </button>
+
+                <button className={`light ${canClickNext ? "" : "disabled"}`}
+                        onClick={() => (canClickNext ? this.props.pageHandler(+1) : false)}>
+                    Next Page {"  "}
+                    <i className="fa fa-angle-right" />
+                </button>
+
+                <button className="light refresh" onClick={() => this.props.refreshHandler()}>
+                    Refresh {"  "}
+                    <i className="fa fa-redo-alt" />
+                </button>
+
                 <div className="Offers-pagination-showing">
                     Showing offers <strong>{parseInt(this.props.showOffset) + 1}</strong>{" "}to{" "}
-                    <strong>{parseInt(this.props.showOffset) + this.props.offers.length}</strong>
+                    <strong>
+                        {parseInt(this.props.showOffset) + this.props.offers.length}
+                    </strong>
                 </div>
             </div>
         );

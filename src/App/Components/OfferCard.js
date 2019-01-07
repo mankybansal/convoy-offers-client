@@ -23,9 +23,10 @@ class OfferCard extends React.Component {
                         <div className="location-type">Pickup</div>
                         <div className="location-area">{pickupLocation}</div>
                         <div className="location-timings">
+                            <span className="location-day">{formatDate(pickupStart, "dddd")}</span> &nbsp;
                             <i className="far fa-clock" />
-                            &nbsp; {formatDate(pickupStart, "hh:MMtt")}&nbsp;–&nbsp;
-                            {formatDate(pickupEnd, "hh:MMtt (Z)")}
+                            &nbsp; {formatDate(pickupStart, "h:MM tt")}&nbsp;–&nbsp;
+                            {formatDate(pickupEnd, "h:MM tt (Z)")}
                         </div>
                     </div>
                 </div>
@@ -37,9 +38,10 @@ class OfferCard extends React.Component {
                         <div className="location-type">Dropoff</div>
                         <div className="location-area">{dropoffLocation}</div>
                         <div className="location-timings">
+                            <span className="location-day">{formatDate(dropoffStart, "dddd")}</span> &nbsp;
                             <i className="far fa-clock" />
-                            &nbsp; {formatDate(dropoffStart, "hh:MMtt")}&nbsp;–&nbsp;
-                            {formatDate(dropoffEnd, "hh:MMtt (Z)")}
+                            &nbsp; {formatDate(dropoffStart, "h:MM tt")}&nbsp;–&nbsp;
+                            {formatDate(dropoffEnd, "h:MM tt (Z)")}
                         </div>
                     </div>
                 </div>

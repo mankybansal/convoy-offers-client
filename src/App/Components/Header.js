@@ -5,7 +5,10 @@ class Header extends Component {
     render() {
         return (
             <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
+                <i className="fa fa-bars App-menu"/>
+                <div className="App-logo-container">
+                    <img src={logo} className="App-logo" alt="logo"/>
+                </div>
                 <div className="App-title">Freight Offers</div>
 
                 <div className="user-profile">

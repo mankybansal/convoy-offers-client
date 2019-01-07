@@ -17,6 +17,7 @@ class App extends Component {
         this.pageHandler = this.pageHandler.bind(this);
         this.showCountHandler = this.showCountHandler.bind(this);
         this.viewTypeHandler = this.viewTypeHandler.bind(this);
+        this.refreshHandler = this.refreshHandler.bind(this);
 
         // set initial state
         this.state = {
@@ -84,6 +85,10 @@ class App extends Component {
                 this.updateOffers();
             }
         );
+    };
+
+    refreshHandler() {
+        this.updateOffers();
     };
 
     updateOffers = () => {
@@ -157,6 +162,7 @@ class App extends Component {
                     showOffset={showOffset}
                     showCount={showCount}
                     pageHandler={this.pageHandler}
+                    refreshHandler={this.refreshHandler}
                 />
             </div>
         );
@@ -164,6 +170,3 @@ class App extends Component {
 }
 
 export default App;
-
-// todo: add user profile
-// todo: add sidebar with hamburger menu

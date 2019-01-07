@@ -9,11 +9,12 @@ class OfferViewer extends React.Component {
 
         if (error) {
             return (
-                <div className="App-loading-container">
+                <div className="App-status-container">
                     <i className="fa fa-exclamation-triangle" />
                     &nbsp;&nbsp;&nbsp; Error fetching offers
                     <br />
-                    <button onClick={this.props.updateOffersHandler}>
+                    <br />
+                    <button className="light" onClick={this.props.updateOffersHandler}>
                         Try again <i className="fa fa-redo" />
                     </button>
                 </div>
@@ -22,7 +23,7 @@ class OfferViewer extends React.Component {
 
         if (!isLoaded) {
             return (
-                <div className="App-loading-container">
+                <div className="App-status-container">
                     <i className="fa fa-circle-notch fa-spin" /> &nbsp;&nbsp;&nbsp;
                     Loading offers
                 </div>

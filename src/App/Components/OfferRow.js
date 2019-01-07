@@ -27,15 +27,15 @@ class OfferRow extends React.Component {
                 </td>
                 <td>
                     <i className="far fa-calendar-alt location-icon" />
-                    {formatDate(dropoffStart, "mm/dd")} &nbsp;&nbsp;&nbsp;{" "}
-                    {formatDate(pickupStart, "h:MMt")}&nbsp;–&nbsp;
-                    {formatDate(pickupEnd, "h:MMt (Z)")}
+                    &nbsp;{formatDate(dropoffStart, "ddd mm/dd")}&nbsp;&nbsp;&nbsp;
+                    {formatDate(pickupStart, "HH:MM")}–
+                    {formatDate(pickupEnd, "HH:MM")}
                 </td>
                 <td>
                     <i className="far fa-calendar-alt location-icon" />
-                    {formatDate(pickupStart, "mm/dd")} &nbsp;&nbsp;&nbsp;{" "}
-                    {formatDate(dropoffStart, "h:MMt")}&nbsp;–&nbsp;
-                    {formatDate(dropoffEnd, "h:MMt (Z)")}
+                    &nbsp;{formatDate(pickupStart, "ddd mm/dd")}&nbsp;&nbsp;&nbsp;
+                    {formatDate(dropoffStart, "HH:MM")}–
+                    {formatDate(dropoffEnd, "HH:MM")}
                 </td>
                 <td>${Utils.numberWithCommas(this.props.offer.offer)}</td>
                 <td>{offer.miles} mi</td>
